@@ -14,7 +14,7 @@ class CiclesController extends Controller
      */
     public function index(Request $request)
     {
-        // $cicles = Cicles::all();
+        $cicles = Cicles::all();
         $actiu = $request->input('actiuBuscar');
 
         if ($actiu === 'actiu') {

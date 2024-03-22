@@ -27,7 +27,6 @@ Route::get('/login', [UsuariController::class, 'showLogin'])->name('login');
 Route::post('/login', [UsuariController::class, 'login']);
 Route::get('/logout', [UsuariController::class, 'logout']);
 
-
 /** RUTAS AUTORIZADAS */
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {
@@ -37,3 +36,4 @@ Route::middleware(['auth'])->group(function () {
     });
 
 });
+

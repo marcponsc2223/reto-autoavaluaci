@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 // use Nette\Utils\Paginator;
 use Illuminate\Pagination\Paginator;
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Paginator::useBootstrap();
+        JsonResource::withoutWrapping();
     }
 }

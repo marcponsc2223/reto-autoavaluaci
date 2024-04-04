@@ -2,24 +2,18 @@
 
 namespace App\Http\Resources;
 
-// use App\Models\Modul;
-use App\Http\Resources\ModulResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CicleResource extends JsonResource
+class UsuariResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return array
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
         return parent::toArray($request);
-        // return [
-        //     "sigles" => $this->sigles,
-        //     "modul" => ModulResource::collection($this->modul)
-        // ];
     }
 }

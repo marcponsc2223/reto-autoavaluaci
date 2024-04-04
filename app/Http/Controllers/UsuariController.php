@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuari;
+use App\Clases\Utilitat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\QueryException;
 
 class UsuariController extends Controller
 {
@@ -90,9 +92,19 @@ class UsuariController extends Controller
         $u->actiu = $request->has('actiu');
         $u->tipus_usuaris_id = $request->rol;
 
-        $u->save();
-
-        return redirect()->action([UsuariController::class, 'index']);
+        // $u->save();
+        try 
+        {
+            $u->save();
+            $response = redirect()->action([UsuariController::class, 'index']);
+        } catch (QueryException $ex)
+        {
+            $mensaje = Utilitat::errorMessage($ex);
+            $request->session()->flash('error', $mensaje);
+            $response = redirect()->action([UsuariController::class, 'create'])->withInput();
+        }
+        
+        return $response;
     }
 
     /**
@@ -153,7 +165,6 @@ class UsuariController extends Controller
      */
     public function update(Request $request, Usuari $usuari)
     {
-        //
         $usuari->correu = $request->email;
         $usuari->nom_usuari = $request->nomUsuari;
         $usuari->nom = $request->nom;
@@ -162,9 +173,18 @@ class UsuariController extends Controller
         $usuari->actiu = $request->has('actiu');
         $usuari->tipus_usuaris_id = $request->rol;
 
-        $usuari->save();
-
-        return redirect()->action([UsuariController::class, 'index']);
+        try 
+        {
+            $usuari->save();
+            $response = redirect()->action([UsuariController::class, 'index']);
+        } catch (QueryException $ex)
+        {
+            $mensaje = Utilitat::errorMessage($ex);
+            $request->session()->flash('error', $mensaje);
+            $response = redirect()->action([UsuariController::class, 'create'])->withInput();
+        }
+        
+        return $response;
     }
 
     /**
@@ -173,12 +193,17 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuari $usuari)
+    public function destroy(Usuari $usuari, Request $request)
     {
         $user = Usuari::find($usuari->id)->modul->isEmpty();
-        if ($user) {
-            $usuari->delete();
-        } 
+        try {
+            if ($user) {
+                $usuari->delete();
+            } 
+        } catch (QueryException $ex) {
+            $mensaje = Utilitat::errorMessage($ex);
+            $request->session()->flash('error', $mensaje);
+        }
         return redirect()->action([UsuariController::class, 'index']);
     }
 }

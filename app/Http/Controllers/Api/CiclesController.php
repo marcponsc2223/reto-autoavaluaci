@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Cicles;
+use App\Clases\Utilitat;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CicleResource;
-use App\Models\Cicles;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class CiclesController extends Controller
 {
@@ -29,40 +31,88 @@ class CiclesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cicle = new Cicles();
+
+        $cicle->sigles = $request->sigles; 
+        // $cicle->nom = $request->nom; 
+        $cicle->descripcio = $request->desc; 
+        $cicle->actiu = ($request->input('actiu') == 'actiu');
+
+        try 
+        {
+            $cicle->save();
+            $response = (new CicleResource($cicle))
+                        ->response()
+                        ->setStatusCode(201);    
+        } catch (QueryException $ex)
+        {
+            $mensaje = Utilitat::errorMessage($ex);
+            $response = \response()
+            ->json(['error'=> $mensaje], 400);
+        }
+        
+        return $response;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cicle  $cicle
+     * @param  \App\Models\Cicles  $cicle
      * @return \Illuminate\Http\Response
      */
-    public function show(Cicle $cicle)
+    public function show(Cicles $cicle)
     {
-        //
+        return new CicleResource($cicle);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cicle  $cicle
+     * @param  \App\Models\Cicles  $cicle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cicle $cicle)
+    public function update(Request $request, Cicles $cicle)
     {
-        //
+        $cicle->sigles = $request->sigles; 
+        $cicle->descripcio = $request->desc; 
+        $cicle->actiu = ($request->input('actiu') == 'actiu');
+
+        try 
+        {
+            $cicle->save();
+            $response = (new CicleResource($cicle))
+                        ->response()
+                        ->setStatusCode(201);    
+        } catch (QueryException $ex)
+        {
+            $mensaje = Utilitat::errorMessage($ex);
+            $response = \response()
+            ->json(['error'=> $mensaje], 400);
+        }
+        
+        return $response;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cicle  $cicle
+     * @param  \App\Models\Cicles  $cicle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cicle $cicle)
+    public function destroy(Cicles $cicle, Request $request)
     {
-        //
+        try {
+            $cicle->delete();
+            $response = \response()
+                        ->json(['missatge' => 'Registre esborrat correctament'], 200);
+
+        } catch (QueryException $ex) {
+            $mensaje = Utilitat::errorMessage($ex);
+            $response = \response()
+            ->json(['error'=> $mensaje], 400);
+
+        }
+        return $response;
     }
 }

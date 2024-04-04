@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Resultats_aprenentatge;
 use Illuminate\Http\Request;
+use App\Http\Resources\Resultats_aprenentatgeResource;
 
-// Programar les APIs per gestionar els resultats d'aprenentatge i els criteris d'avaluació.
 
 class Resultats_aprenentatgeController extends Controller
 {
@@ -16,17 +17,9 @@ class Resultats_aprenentatgeController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $ra = Resultats_aprenentatge::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Resultats_aprenentatgeResource::collection($ra);
     }
 
     /**
@@ -47,17 +40,6 @@ class Resultats_aprenentatgeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Resultats_aprenentatge $resultats_aprenentatge)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resultats_aprenentatge  $resultats_aprenentatge
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Resultats_aprenentatge $resultats_aprenentatge)
     {
         //
     }

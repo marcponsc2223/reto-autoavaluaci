@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cicles;
+use App\Clases\Utilitat;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class CiclesController extends Controller
 {
@@ -51,13 +53,24 @@ class CiclesController extends Controller
         $cicle = new Cicles();
 
         $cicle->sigles = $request->sigles; 
-        $cicle->nom = $request->nom; 
+        // $cicle->nom = $request->nom; 
         $cicle->descripcio = $request->desc; 
         $cicle->actiu = ($request->input('actiu') == 'actiu');
 
-        $cicle->save();
+        try 
+        {
+            $cicle->save();
+            $response = redirect()->action([CiclesController::class, 'index']);
+        } catch (QueryException $ex)
+        {
+            $mensaje = Utilitat::errorMessage($ex);
+            $request->session()->flash('error', $mensaje);
+            $response = redirect()->action([CiclesController::class, 'create'])->withInput();
+        }
         
-        return redirect()->action([CiclesController::class, 'index']);
+        return $response;
+        
+        // return redirect()->action([CiclesController::class, 'index']);
     }
 
     /**
@@ -115,9 +128,13 @@ class CiclesController extends Controller
      */
     public function destroy(Request $request, Cicles $cicle)
     {
-        //
-        $cicle->delete();
-
+        try {
+            $cicle->delete();
+            $request->session()->flash('mensaje', 'Registre esborrat correctament');
+        } catch (QueryException $ex) {
+            $mensaje = Utilitat::errorMessage($ex);
+            $request->session()->flash('error', $mensaje);
+        }
         return redirect()->action([CiclesController::class, 'index']);
     }
 }

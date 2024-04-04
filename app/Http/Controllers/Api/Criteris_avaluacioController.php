@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Criteris_avaluacio;
 use Illuminate\Http\Request;
-
+use App\Http\Resources\Criteris_avaluacioResource;
 
 class Criteris_avaluacioController extends Controller
 {
@@ -15,17 +16,9 @@ class Criteris_avaluacioController extends Controller
      */
     public function index()
     {
-            //
-    }
+        $crit = Criteris_avaluacio::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Criteris_avaluacioResource::collection($crit);
     }
 
     /**
@@ -46,17 +39,6 @@ class Criteris_avaluacioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Criteris_avaluacio $criteris_avaluacio)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Criteris_avaluacio  $criteris_avaluacio
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Criteris_avaluacio $criteris_avaluacio)
     {
         //
     }

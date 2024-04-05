@@ -31,3 +31,4 @@ Route::apiResource('moduls', ModulController::class);
 Route::apiResource('alumnes', UsuariController::class);
 
 
+

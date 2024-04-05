@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Resources\UsuariResource;
+use App\Models\Modul;
 use App\Models\Usuari;
 use App\Clases\Utilitat;
 use Illuminate\Http\Request;
@@ -29,32 +30,9 @@ class UsuariController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store (Request $request)
     {
-        // $u = new Usuari();
-        // $u->correu = $request->email;
-        // $u->nom_usuari = $request->nom;
-        // $u->nom = $request->nom;
-        // $u->cognom = $request->cognoms;
-        // $u->contrasenya = bcrypt($request->contrasenya);
-        // $u->actiu = $request->has('actiu');
-        // $u->tipus_usuaris_id = $request->rol;
-
-        // // $u->save();
-        // try 
-        // {
-        //     $u->save();
-        //     $response = (new UsuariResource($u))
-        //                 ->response()
-        //                 ->setStatusCode(201);
-        // } catch (QueryException $ex)
-        // {
-        //     $mensaje = Utilitat::errorMessage($ex);
-        //     $response = \response()
-        //     ->json(['error'=> $mensaje], 400);
-        // }
-        
-        // return $response;
+        //
     }
 
     /**
@@ -75,30 +53,14 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Usuari $usuari)
+    public function update(Request $request, $id)
     {
-        // $usuari->correu = $request->email;
-        // $usuari->nom_usuari = $request->nomUsuari;
-        // $usuari->nom = $request->nom;
-        // $usuari->cognom = $request->cognoms;
-        // $usuari->contrasenya = bcrypt($request->contrasenya);
-        // $usuari->actiu = $request->has('actiu');
-        // $usuari->tipus_usuaris_id = $request->rol;
+        $user = Usuari::find($id);
 
-        // try 
-        // {
-        //     $usuari->save();
-        //     $response = (new UsuariResource($usuari))
-        //                 ->response()
-        //                 ->setStatusCode(201);
-        // } catch (QueryException $ex)
-        // {
-        //     $mensaje = Utilitat::errorMessage($ex);
-        //     $response = \response()
-        //     ->json(['error'=> $mensaje], 400);
-        // }
-        
-        // return $response;
+        $modul = $request->input('moduls_id');
+        $user->modul()->sync($modul, false);
+
+        return response()->json(['message' => 'Relaciones de usuarios añadidas correctamente'], 200);
     }
 
     /**
@@ -107,42 +69,13 @@ class UsuariController extends Controller
      * @param  \App\Models\Usuari  $usuari
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Usuari $usuari, Request $request)
+    public function destroy($id, Request $request)
     {
-        $usuari->modul()->detach($request);
-        // $usuari->usuari()->detach();
+        $usuari = Usuari::find($id);
+        // $modul = $request->input("moduls_id");
+        $usuari->modul()->detach();
 
         return response()->json(['message' => 'Relaciones de usuarios eliminadas correctamente'], 200);
     
-        // $user = Usuari::find($usuari->id)->modul->isEmpty();
-        //     try 
-        //     {
-        //         if ($user) {
-        //             $usuari->delete();
-        //             $response = \response()
-        //                         ->json(['missatge' => 'Registre esborrat correctament'], 200);
-        //         }
-
-        //     } catch (QueryException $ex)
-        //     {
-        //         $mensaje = Utilitat::errorMessage($ex);
-        //         $response = \response()
-        //         ->json(['error'=> $mensaje], 400);
-        //     }
-        //     // try 
-        //     // {
-        //     //     // if ($user) {
-        //     //         $usuari->delete();
-        //     //         $response = \response()
-        //     //                 ->json(['missatge' => 'Registre esborrat correctament'], 200);
-        //     //     // } 
-        //     // } 
-        //     // catch (QueryException $ex)
-        //     // {
-        //     //     $mensaje = Utilitat::errorMessage($ex);
-        //     //     $response = \response()
-        //     //     ->json(['error'=> $mensaje], 400);
-        //     // }
-        //     return $response;
     }
 }

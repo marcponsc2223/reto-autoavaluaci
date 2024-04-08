@@ -47,7 +47,7 @@
                       <li><a class="dropdown-item" href="#">Resultats aprenentatge</a></li>
                       <li><a class="dropdown-item" href="#">Criteris avaluació</a></li>
                       <hr>
-                      <li><a class="dropdown-item" href="#">Autoavaluació alumnes</a></li>
+                      <li><a class="dropdown-item" href="{{ url('autoavaluacioAlumnes') }}">Autoavaluació alumnes</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -55,10 +55,10 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Alumnes
+                      Alumnes 
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Autoavaluació</a></li>
+                      <li><a class="dropdown-item" href="{{ url('autoavaluacio') }}">Autoavaluació</a></li>
                     </ul>
                   </li>
                 </ul>

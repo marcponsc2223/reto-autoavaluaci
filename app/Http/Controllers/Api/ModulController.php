@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Modul;
+use App\Models\Resultats_aprenentatge;
+
 use App\Models\Usuari;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,8 +21,9 @@ class ModulController extends Controller
     {
         // $user = Usuari::find($usuari->id)->modul->isEmpty();
         // $m = Usuari::whereHas('modul')->get();
-        $m = Usuari::all();
+        $m = Modul::all();
         return ModulResource::collection($m);
+
     }
 
     /**
@@ -40,9 +43,14 @@ class ModulController extends Controller
      * @param  \App\Models\Modul  $modul
      * @return \Illuminate\Http\Response
      */
-    public function show(Modul $modul)
+    public function show($modul)
     {
-        //
+        $modulId = Modul::find($modul);
+        // log($modulId);
+        var_dump($modul);
+        die();
+        return ModulResource::collection($modulId);
+
     }
 
     /**

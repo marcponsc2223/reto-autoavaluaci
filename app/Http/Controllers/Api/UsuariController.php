@@ -72,7 +72,6 @@ class UsuariController extends Controller
     public function destroy($id, Request $request)
     {
         $usuari = Usuari::find($id);
-        // $modul = $request->input("moduls_id");
         $usuari->modul()->detach();
 
         return response()->json(['message' => 'Relaciones de usuarios eliminadas correctamente'], 200);

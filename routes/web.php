@@ -27,6 +27,10 @@ Route::get('/login', [UsuariController::class, 'showLogin'])->name('login');
 Route::post('/login', [UsuariController::class, 'login']);
 Route::get('/logout', [UsuariController::class, 'logout']);
 
+
+Route::get('/autoavaluacio', function () {
+    return view('autoavaluacioAlumnes.index');
+});
 /** RUTAS AUTORIZADAS */
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {

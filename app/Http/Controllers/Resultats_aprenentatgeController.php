@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Resultats_aprenentatgeResource;
 use App\Models\Resultats_aprenentatge;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class Resultats_aprenentatgeController extends Controller
      */
     public function index()
     {
-        //
+        $crit = Resultats_aprenentatge::all();
+
+        return Resultats_aprenentatgeResource::collection($crit);
     }
 
     /**
@@ -48,7 +51,7 @@ class Resultats_aprenentatgeController extends Controller
      */
     public function show(Resultats_aprenentatge $resultats_aprenentatge)
     {
-        //
+       //
     }
 
     /**

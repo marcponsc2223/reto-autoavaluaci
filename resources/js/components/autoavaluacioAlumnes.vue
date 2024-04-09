@@ -9,7 +9,7 @@
               </tr>
             </thead>
             <tbody>
-                <tr v-for="modul in moduls" v-if="modul.id === 7">
+                <tr v-for="modul in moduls">
                     <td>{{modul.codi}}</td>
                     <td>{{modul.sigles}}</td>
                     <td>{{modul.nom}}</td>
@@ -89,6 +89,7 @@ export default {
             myModal: {}, 
             modul: {},
             ras: [],
+            ra: [],
             cas: [],
             rus: [],
         }
@@ -125,11 +126,13 @@ export default {
             .then(response => {
                 // const moduls = this.moduls
                 me.ras = response.data
+                this.ra = me.ras.id 
+                console.log(this.ras);
             })
         axios
             .get('criterisAval', {
                 params: {
-                    ras: this.ras.id
+                    ras: this.ra
                 }
             })
             .then(response => {

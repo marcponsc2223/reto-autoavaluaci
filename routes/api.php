@@ -35,7 +35,7 @@ Route::apiResource('rubriques', RubriquaController::class);
 
 Route::apiResource('avaluacio', ModulController::class);
 
-Route::get('avaluacio/{id}', 'ModulController@show');
+// Route::get('avaluacio/{id}', 'ModulController@show');
 
 Route::get('criterisAval/{id}', [Criteris_avaluacioController::class, 'show']);
 // Route::get('moduls/{id}', [ModulController::class, 'show']);

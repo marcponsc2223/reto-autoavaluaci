@@ -66,4 +66,11 @@ class Resultats_aprenentatgeController extends Controller
     {
         //
     }
+
+    public function mostrarResultadoAprendizaje($idModul)
+    {
+        $rubriques = Resultats_aprenentatge::with('criteris_avaluacio.rubriques.criteris_avaluacio')->where('moduls_id', $idModul)->groupBy('id')->get();
+
+        return Resultats_aprenentatgeResource::collection($rubriques);
+    }
 }

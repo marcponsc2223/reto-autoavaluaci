@@ -31,11 +31,15 @@ Route::apiResource('criterisAval', Criteris_avaluacioController::class);
 Route::apiResource('resultApren', Resultats_aprenentatgeController::class);
 Route::apiResource('moduls', ModulController::class);
 Route::apiResource('alumnes', UsuariController::class);
-Route::apiResource('rubriques', RubriquaController::class);
+// Route::apiResource('rubriques', RubriquaController::class);
 
 Route::apiResource('avaluacio', ModulController::class);
 
-// Route::get('avaluacio/{id}', 'ModulController@show');
+Route::get('avaluacio/{id}', [ModulController::class, 'show']);
+
+Route::get('rubriques/{idModul}', [Resultats_aprenentatgeController::class, 'mostrarResultadoAprendizaje']);
+
+// Route::get('avaluacio/{id}', [ModulController::class, 'show']);
 
 Route::get('criterisAval/{id}', [Criteris_avaluacioController::class, 'show']);
 // Route::get('moduls/{id}', [ModulController::class, 'show']);

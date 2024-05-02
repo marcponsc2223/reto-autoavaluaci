@@ -43,13 +43,15 @@ class ModulController extends Controller
      * @param  \App\Models\Modul  $modul
      * @return \Illuminate\Http\Response
      */
-    public function show($modul)
+    public function show($userId)
     {
-        $modulId = Modul::find($modul);
-        // log($modulId);
-        var_dump($modul);
-        die();
-        return ModulResource::collection($modulId);
+         
+        $usuario = Usuari::findOrFail($userId);
+    
+        // Obtén los módulos asociados al usuario
+        $moduls = $usuario->modul()->get(); 
+
+        return ModulResource::collection($moduls);
 
     }
 

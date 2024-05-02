@@ -77,4 +77,8 @@ class UsuariController extends Controller
         return response()->json(['message' => 'Relaciones de usuarios eliminadas correctamente'], 200);
     
     }
+
+    public function mostrarCriteriosPorUser() {
+        
+    }
 }

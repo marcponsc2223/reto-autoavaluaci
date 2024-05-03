@@ -41,6 +41,6 @@ class Criteris_avaluacio extends Model
      */
     public function usuaris(): BelongsToMany
     {
-        return $this->belongsToMany(Usuari::class, 'alumnes_has_criteris_avaluacio', 'criteris_avaluacio', 'usuaris_id');
+        return $this->belongsToMany(Usuari::class, 'alumnes_has_criteris_avaluacio', 'criteris_avaluacio_id', 'usuaris_id');
     }
 }

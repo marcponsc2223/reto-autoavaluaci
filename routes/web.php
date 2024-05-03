@@ -31,6 +31,9 @@ Route::get('/logout', [UsuariController::class, 'logout']);
 Route::get('/autoavaluacio', function () {
     return view('autoavaluacioAlumnes.index');
 });
+Route::get('/autoavaluacioProfes', function () {
+    return view('autoavaluacioProfes.index');
+});
 /** RUTAS AUTORIZADAS */
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', function () {

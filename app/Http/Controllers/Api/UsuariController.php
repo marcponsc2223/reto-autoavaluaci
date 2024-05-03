@@ -45,7 +45,12 @@ class UsuariController extends Controller
     {
         //
     }
+    public function showAll() {
+        
+        $moduls = Usuari::with('modul')->where('tipus_usuaris_id', '=', 3)->groupBy('id')->get();
+        return UsuariResource::collection($moduls);
 
+    }
     /**
      * Update the specified resource in storage.
      *

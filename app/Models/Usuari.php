@@ -43,6 +43,6 @@ class Usuari extends Authenticatable
      */
     public function criteris_avaluacio(): BelongsToMany
     {
-        return $this->belongsToMany(Criteris_avaluacio::class, 'alumnes_has_criteris_avaluacio', 'usuaris_id', 'criteris_avaluacio_id');
+        return $this->belongsToMany(Criteris_avaluacio::class, 'alumnes_has_criteris_avaluacio', 'usuaris_id', 'criteris_avaluacio_id')->withPivot('nota');
     }
 }

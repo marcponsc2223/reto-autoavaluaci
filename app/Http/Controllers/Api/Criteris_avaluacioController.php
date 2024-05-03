@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Criteris_avaluacio;
+use App\Models\Usuari;
 use Illuminate\Http\Request;
+use App\Models\Criteris_avaluacio;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Criteris_avaluacioResource;
 
 class Criteris_avaluacioController extends Controller
@@ -71,5 +72,27 @@ class Criteris_avaluacioController extends Controller
     public function destroy(Criteris_avaluacio $criteris_avaluacio)
     {
         //
+    }
+
+    public function guardarNota($idUsu, $idCriteri, Request $request) 
+    {
+        $usuari = Usuari::find($idUsu);
+        $criteri = Criteris_avaluacio::find($idCriteri);
+
+        if (!$usuari || !$criteri) {
+            return response()->json(['error' => 'Usuario o criterio no encontrado'], 404);
+        }
+
+        $notasList = [];
+
+        foreach ($request->input('notes') as $key => $value) {
+            $notasList[$key + 1] = ['nota' => intval($value)];
+        }
+
+        $usuari->criteris_avaluacio()->sync($notasList, false);
+
+            
+        return response()->json(['message' => 'Notas guardadas correctamente'], 200);
+
     }
 }

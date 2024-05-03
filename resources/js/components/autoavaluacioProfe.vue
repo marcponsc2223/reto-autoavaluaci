@@ -1,3 +1,4 @@
+<!-- Crear les vistes i components necessaris per a que els professors puguin consultar les autoavaluacions dels alumnes. -->
 <template>
     <div class="card">
         <table class="table">
@@ -53,7 +54,7 @@
                     <!-- </form> -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" @click="puntuar()">Guardar cambios</button>
+                    <!-- <button type="button" class="btn btn-primary">Guardar cambios</button> -->
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -76,7 +77,7 @@ export default {
             const me = this
             var userId = document.querySelector('meta[name="userId"]').content
             axios
-                .get('http://localhost:8080/reto-autoavaluaci-/public/api/avaluacio/' + userId)
+                .get('http://localhost:8080/reto-autoavaluaci-/public/api/avaluacioProfe')
                 .then(response =>{
                     me.moduls = response.data
                     me.moduls.forEach(id => {
@@ -96,44 +97,6 @@ export default {
                 });
                          
         },
-        puntuar() {
-            // let modulId
-            var userId = document.querySelector('meta[name="userId"]').content
-
-            let criterisId
-            let notes = []
-            const selectElements = document.getElementsByClassName('select');
-
-
-            this.rubriques.forEach(rubrica => {
-                rubrica.criteris_avaluacio.forEach(criteri => {
-                    criterisId = criteri.id
-                })
-            })
-
-            for (const select of selectElements) {
-                // Obtener las opciones seleccionadas para cada elemento select
-                const selectedOptions = Array.from(select.selectedOptions);
-                
-                // Iterar sobre las opciones seleccionadas y obtener sus valores
-                for (const option of selectedOptions) {
-                    // console.log(option.value);
-                    notes.push(option.value)
-                }
-            }
-
-            
-         
-        // let notas = [1, 2, 3, 2, 1, 1, 1, 1, 2, 1, 3, 1, 2, 3, 1, 1]
-        axios.put('http://localhost:8080/reto-autoavaluaci-/public/api/guardarNota/' + userId + '/' + criterisId, { notes: notes })
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            }); 
-           
-        }
 
     },
     mounted() {

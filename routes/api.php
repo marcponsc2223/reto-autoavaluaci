@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CiclesController;
-use App\Http\Controllers\Api\Criteris_autoavalacioController;
+// use App\Http\Controllers\Api\Criteris_autoavalacioController;
 use App\Http\Controllers\Api\Criteris_avaluacioController;
 use App\Http\Controllers\Api\ModulController;
 use App\Http\Controllers\Api\Resultats_aprenentatgeController;
@@ -36,12 +36,13 @@ Route::apiResource('alumnes', UsuariController::class);
 Route::apiResource('avaluacio', ModulController::class);
 
 Route::get('avaluacio/{id}', [ModulController::class, 'show']);
+Route::get('avaluacioProfe', [UsuariController::class, 'showAll']);
 
 Route::get('rubriques/{idModul}', [Resultats_aprenentatgeController::class, 'mostrarResultadoAprendizaje']);
 
-// Route::get('avaluacio/{id}', [ModulController::class, 'show']);
+Route::put('guardarNota/{idUsu}/{idCriteri}', [Criteris_avaluacioController::class, 'guardarNota']);
 
-Route::get('criterisAval/{id}', [Criteris_avaluacioController::class, 'show']);
+// Route::get('criterisAval/{id}', [Criteris_avaluacioController::class, 'show']);
 // Route::get('moduls/{id}', [ModulController::class, 'show']);
 
 // Route::apiResource('autoavaluacio', Criteris_autoavalacioController::class);

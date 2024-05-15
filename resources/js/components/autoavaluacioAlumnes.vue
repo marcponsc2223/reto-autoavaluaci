@@ -76,12 +76,12 @@ export default {
             const me = this
             var userId = document.querySelector('meta[name="userId"]').content
             axios
-                .get('http://localhost:8080/reto-autoavaluaci-/public/api/avaluacio/' + userId)
+                .get('avaluacio/' + userId)
                 .then(response =>{
                     me.moduls = response.data
                     me.moduls.forEach(id => {
                         axios
-                            .get('http://localhost:8080/reto-autoavaluaci-/public/api/rubriques/' + id.id)
+                            .get('rubriques/' + id.id)
                             .then(response =>{
                                 me.rubriques = response.data
                                 console.log(response.data);
@@ -125,7 +125,7 @@ export default {
             
          
         // let notas = [1, 2, 3, 2, 1, 1, 1, 1, 2, 1, 3, 1, 2, 3, 1, 1]
-        axios.put('http://localhost:8080/reto-autoavaluaci-/public/api/guardarNota/' + userId + '/' + criterisId, { notes: notes })
+        axios.put('guardarNota/' + userId + '/' + criterisId, { notes: notes })
             .then(response => {
                 console.log(response.data);
             })

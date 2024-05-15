@@ -4,7 +4,7 @@
 <meta name="userId" content="{{Auth::user()->id}}">
 <meta name="modulId" content="{{Auth::user()->modul->first->id}}">
 
-    <div id="autoavaluacio"> 
-       <autoavaluacioProfe> </autoavaluacioProfe>
+    <div id="autoavaluacioProfe"> 
+       {{-- <autoavaluacioProfe> </autoavaluacioProfe> --}}
      </div> 
 @endsection

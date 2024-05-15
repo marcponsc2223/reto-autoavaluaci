@@ -73,4 +73,5 @@ class Resultats_aprenentatgeController extends Controller
 
         return Resultats_aprenentatgeResource::collection($rubriques);
     }
+   
 }

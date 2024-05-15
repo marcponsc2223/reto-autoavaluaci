@@ -4,23 +4,26 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">Id</th>
+                <th scope="col">Nom user</th>
                 <th scope="col">Ordre</th>
                 <th scope="col">Sigles</th>
                 <th scope="col">Descripcio</th>
               </tr>
             </thead>
             <tbody>
-                <tr v-for="modul in moduls">
-                    <td>{{modul.id}}</td>
-                    <td>{{modul.codi}}</td>
-                    <td>{{modul.sigles}}</td>
-                    <td>{{modul.nom}}</td>
-                    <td>
-                        <button  class="btn btn-sm btn-secondary">
-                        <i class="fa fa-edit" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#exampleModal">Modificar</i></button>
-                    </td>
-                </tr>     
+                <template v-for="usuari in usuaris">
+                    <tr v-for="modul in usuari.modul">
+                        <td>{{usuari.nom}}</td>
+                        <td>{{modul.codi}}</td>
+                        <td>{{modul.sigles}}</td>
+                        <td>{{modul.nom}}</td>
+                        <td>
+                            <button  class="btn btn-sm btn-secondary">
+                            <i class="fa fa-edit" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="showForms(modul.id, usuari.id)">Modificar</i></button>
+                        </td>
+                    </tr>   
+                </template>
+                 
             </tbody>
         </table>
     </div>
@@ -33,25 +36,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- <form> -->
+                    
                         <div class="form"  v-for="rubrica in rubriques" :key="rubrica.id">
                             <div class="form-group" >
                                 <h5 for="exampleFormControlInput1">{{rubrica.descripcio}}</h5>
                               </div>
+                            
                               <div class="form-grup" v-for="criteri in rubrica.criteris_avaluacio" :key="criteri.id">
                                   <h6>{{ criteri.descripcio }}</h6>
-                                   <select class="select" id="selectNotes">
-                                      <option v-for="rubrica in criteri.rubriques" :key="rubrica.id" :value="rubrica.nivell" class="rubriquesNotes">{{ rubrica.descripcio}}</option> 
-                                      <!-- <option v-for="rubrica in criteri.rubriques" :key="rubrica.id">{{ rubrica.descripcio}}</option> -->
+                                   <select class="select" id="selectNotes" name="selects">
+                                      <option v-for="rubrica in criteri.rubriques" :key="rubrica.id"  class="rubriquesNotes">{{ rubrica.descripcio}}</option> 
                                   </select> 
                               </div>
                               <div class="form-group">
-                                <!-- <select class="select">
-                                  <option v-for="criteri in rubrica.criteris_avaluacio" :key="criteri.id">{{ criteri.descripcio }}</option>
-                              </select>                         -->
+                    
                               </div>
                         </div>
-                    <!-- </form> -->
+     
                 </div>
                 <div class="modal-footer">
                     <!-- <button type="button" class="btn btn-primary">Guardar cambios</button> -->
@@ -70,37 +71,79 @@ export default {
             modul: {},
             rubriques: {},
             criteris: {},
+            usuaris: {},
+            notas: []
         }
     }, 
     methods: {
         fetchData() {
-            const me = this
-            var userId = document.querySelector('meta[name="userId"]').content
-            axios
-                .get('http://localhost:8080/reto-autoavaluaci-/public/api/avaluacioProfe')
-                .then(response =>{
-                    me.moduls = response.data
-                    me.moduls.forEach(id => {
-                        axios
-                            .get('http://localhost:8080/reto-autoavaluaci-/public/api/rubriques/' + id.id)
-                            .then(response =>{
-                                me.rubriques = response.data
-                                console.log(response.data);
-
-                                me.rubriques.map(rubrica => {
-                                    rubrica.criteris_avaluacio.map(criteri => {
-                                        me.criteris = criteri.descripcio
-                                    })
-                                })
-                            })  
-                    })
-                });
+           
                          
         },
+        showForms(modulId, userId) {
+            const me = this
+            axios
+                .get('avaluacioProfe')
+                .then(response =>{
+                    me.moduls = response.data
+                    // console.log(me.moduls);
+                    axios
+                        .get('rubriques/' + modulId)
+                        .then(response =>{
+                            me.rubriques = response.data
+                            // console.log(response.data);
+
+                            me.rubriques.map(rubrica => {
+                                rubrica.criteris_avaluacio.map(criteri => {
+                                    me.criteris = criteri.descripcio
+                                })
+                            })
+                        })  
+                        axios
+                        .get('rubriquesUser/' + userId)
+                        .then(response =>{
+                             console.log(response.data);
+                             response.data.forEach(nota => {
+                                me.notas.push(nota.pivot.nota)
+                             });
+                        });
+                });
+                me.rellenarForm()
+                
+        },
+        rellenarForm(){
+            let selectedValues = document.getElementsByName('selects');
+            let index = 0;
+
+            selectedValues.forEach(selected => {
+                selected.value = this.notas[index]
+                var options = selected.querySelectorAll('option');
+                options.forEach(function(option) {
+                    if (option.value === selected.value) {
+                        option.selected = true;
+                    } else {
+                        option.selected = false;
+                    }
+                });
+                index++;
+                selected.disabled = true
+            });
+        },
+        showModuls() {
+            const me = this
+            axios
+                .get('modulsAlumne')
+                .then(response =>{
+                    me.usuaris = response.data
+                    console.log(response.data);
+                })
+        },
+        
 
     },
     mounted() {
-        this.fetchData()
+        // this.fetchData()
+        this.showModuls()
     },
 } 
 </script>

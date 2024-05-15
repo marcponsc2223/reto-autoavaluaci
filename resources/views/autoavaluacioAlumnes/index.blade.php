@@ -5,6 +5,6 @@
 <meta name="modulId" content="{{Auth::user()->modul->first->id}}">
 
     <div id="autoavaluacio"> 
-       <autoavaluacioAlumnes> </autoavaluacioAlumnes>
+       {{-- <autoavaluacioAlumnes> </autoavaluacioAlumnes> --}}
      </div> 
 @endsection

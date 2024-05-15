@@ -39,8 +39,10 @@ Route::get('avaluacio/{id}', [ModulController::class, 'show']);
 Route::get('avaluacioProfe', [UsuariController::class, 'showAll']);
 
 Route::get('rubriques/{idModul}', [Resultats_aprenentatgeController::class, 'mostrarResultadoAprendizaje']);
+Route::get('modulsAlumne', [UsuariController::class, 'showAllModuls']);
 
 Route::put('guardarNota/{idUsu}/{idCriteri}', [Criteris_avaluacioController::class, 'guardarNota']);
+Route::get('rubriquesUser/{idUser}', [UsuariController::class, 'sacarNota']);
 
 // Route::get('criterisAval/{id}', [Criteris_avaluacioController::class, 'show']);
 // Route::get('moduls/{id}', [ModulController::class, 'show']);

@@ -11,7 +11,7 @@ import axios from 'axios';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.baseURL = '/reto-Autoavaluaci/public/api/';
+window.axios.defaults.baseURL = '/reto-autoavaluaci/public/api/';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

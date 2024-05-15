@@ -83,7 +83,14 @@ class UsuariController extends Controller
     
     }
 
-    public function mostrarCriteriosPorUser() {
-        
+    public function sacarNota($id) {
+        $r = Usuari::with('criteris_avaluacio')->find($id);
+        return UsuariResource::collection($r->criteris_avaluacio);
+    }
+
+    public function showAllModuls() {
+
+        $moduls = Usuari::with('modul')->where('tipus_usuaris_id', '=', 3)->groupBy('id')->get();
+        return UsuariResource::collection($moduls);
     }
 }

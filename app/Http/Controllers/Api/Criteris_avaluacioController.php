@@ -43,7 +43,6 @@ class Criteris_avaluacioController extends Controller
     {
         $ra = request()->query('ras');
 
-        // Ahora puedes usar este ID del módulo para buscar los datos relacionados en la base de datos
         $resultat = Criteris_avaluacio::find($ra);
 
         return Criteris_avaluacioResource::collection($resultat);

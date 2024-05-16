@@ -32,7 +32,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Puntuar Modulo</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Modulo del Alumno</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -45,7 +45,7 @@
                               <div class="form-grup" v-for="criteri in rubrica.criteris_avaluacio" :key="criteri.id">
                                   <h6>{{ criteri.descripcio }}</h6>
                                    <select class="select" id="selectNotes" name="selects">
-                                      <option v-for="rubrica in criteri.rubriques" :key="rubrica.id"  class="rubriquesNotes">{{ rubrica.descripcio}}</option> 
+                                      <option v-for="rubrica in criteri.rubriques" :key="rubrica.id" :value="rubrica.nivell"  class="rubriquesNotes">{{ rubrica.descripcio}}</option> 
                                   </select> 
                               </div>
                               <div class="form-group">
@@ -77,7 +77,7 @@ export default {
     }, 
     methods: {
         fetchData() {
-           
+        
                          
         },
         showForms(modulId, userId) {
@@ -91,11 +91,12 @@ export default {
                         .get('rubriques/' + modulId)
                         .then(response =>{
                             me.rubriques = response.data
-                            // console.log(response.data);
+                            console.log('rubrica' );
 
                             me.rubriques.map(rubrica => {
                                 rubrica.criteris_avaluacio.map(criteri => {
                                     me.criteris = criteri.descripcio
+                                    
                                 })
                             })
                         })  
@@ -108,7 +109,9 @@ export default {
                              });
                         });
                 });
-                me.rellenarForm()
+                setTimeout(() => {
+                    me.rellenarForm()
+                }, 2500);
                 
         },
         rellenarForm(){
@@ -144,6 +147,7 @@ export default {
     mounted() {
         // this.fetchData()
         this.showModuls()
+        // this.rellenarForm()
     },
 } 
 </script>

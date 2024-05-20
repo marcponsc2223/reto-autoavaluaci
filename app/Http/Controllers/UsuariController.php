@@ -89,7 +89,8 @@ class UsuariController extends Controller
         $u->nom = $request->nom;
         $u->cognom = $request->cognoms;
         $u->contrasenya = bcrypt($request->contrasenya);
-        $u->actiu = $request->has('actiu');
+        $u->actiu = $request->has('actiu') ? true : false;
+        // $u->actiu = $request->has('actiu');
         $u->tipus_usuaris_id = $request->rol;
 
         // $u->save();
@@ -170,7 +171,8 @@ class UsuariController extends Controller
         $usuari->nom = $request->nom;
         $usuari->cognom = $request->cognoms;
         $usuari->contrasenya = bcrypt($request->contrasenya);
-        $usuari->actiu = $request->has('actiu');
+        $usuari->actiu = $request->has('actiu') ? true : false;
+        // $usuari->actiu = $request->has('actiu');
         $usuari->tipus_usuaris_id = $request->rol;
 
         try 

@@ -53,7 +53,7 @@
                     <!-- </form> -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" @click="puntuar()">Guardar cambios</button>
+                    <button type="button" class="btn btn-primary" @click="puntuar()" data-bs-dismiss="modal">Guardar cambios</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>

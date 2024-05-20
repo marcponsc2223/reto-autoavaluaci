@@ -13,7 +13,7 @@
             <tbody>
                 <template v-for="usuari in usuaris">
                     <tr v-for="modul in usuari.modul">
-                        <td>{{usuari.nom}}</td>
+                        <td>{{usuari.nom_usuari}}</td>
                         <td>{{modul.codi}}</td>
                         <td>{{modul.sigles}}</td>
                         <td>{{modul.nom}}</td>
@@ -63,6 +63,8 @@
     </div>
 </template>
 <script>
+import { unset } from 'lodash';
+
 export default {
     data(){
         return {
@@ -99,13 +101,16 @@ export default {
                                     
                                 })
                             })
-                        })  
+                        })
+                        me.notas = []
+
                         axios
                         .get('rubriquesUser/' + userId)
                         .then(response =>{
                              console.log(response.data);
                              response.data.forEach(nota => {
                                 me.notas.push(nota.pivot.nota)
+                                console.log('notas: ' + me.notas);
                              });
                         });
                 });

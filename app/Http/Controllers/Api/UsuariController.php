@@ -46,8 +46,8 @@ class UsuariController extends Controller
         //
     }
     public function showAll() {
-        
-        $moduls = Usuari::with('modul')->where('tipus_usuaris_id', '=', 3)->groupBy('id')->get();
+        // ->groupBy('id')
+        $moduls = Usuari::with('modul')->where('tipus_usuaris_id', '=', 3)->get();
         return UsuariResource::collection($moduls);
 
     }
@@ -88,9 +88,10 @@ class UsuariController extends Controller
         return UsuariResource::collection($r->criteris_avaluacio);
     }
 
-    public function showAllModuls() {
-
-        $moduls = Usuari::with('modul')->where('tipus_usuaris_id', '=', 3)->groupBy('id')->get();
+    public function showAllModuls() 
+    {
+// ->groupBy('id')
+        $moduls = Usuari::with('modul')->where('tipus_usuaris_id', '=', 3)->get();
         return UsuariResource::collection($moduls);
     }
 }
